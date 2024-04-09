@@ -7,13 +7,16 @@ const exportMode = isLocal ? "development" : "production";
 
 const exportExternals = isLocal ? [] : [nodeExternals()];
 
+const stage = slsw.lib.options.stage ?? slsw.lib.serverless.providers.aws.getStage();
+
+const minimize = stage === "prod";
 module.exports = {
   entry: slsw.lib.entries,
   target: "node",
   mode: exportMode,
   externals: exportExternals,
   optimization: {
-    minimize: false,
+    minimize,
   },
   module: {
     rules: [

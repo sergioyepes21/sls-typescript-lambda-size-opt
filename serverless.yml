@@ -22,12 +22,16 @@ functions:
   hello:
     handler: "./src/index.handler"
     timeout: 5
+    memorySize: 128
 
 custom:
   webpack:
     webpackConfig: "./webpack.config.js"
     includeModules: false
     packager: "npm"
+  prune:
+    automatic: true
+    number: 0
 
 package:
   patterns:
@@ -38,3 +42,4 @@ package:
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-prune-plugin
