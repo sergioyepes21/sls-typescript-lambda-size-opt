@@ -6,15 +6,15 @@ provider:
   name: aws
   runtime: nodejs20.x
   layers:
-    - { Ref: NodeModulesLambdaLayer }
+    - { Ref: NodeModulesLibLambdaLayer }
   stage: ${opt:stage, "dev"}
   logRetentionInDays: 1
 
 layers:
-  NodeModules:
+  NodeModulesLib:
     path: "./layers/node-modules-lib"
     name: "node-modules-lib-${sls:stage}"
-    retain: true
+    retain: false
     compatibleRuntimes:
       - "nodejs20.x"
 
@@ -28,12 +28,6 @@ custom:
     webpackConfig: "./webpack.config.js"
     includeModules: false
     packager: "npm"
-  plugin:
-    layerManager:
-      NodeLayers:
-        unsafePermissions: false
-  layerConfig:
-    installLayers: false
 
 package:
   patterns:
@@ -44,4 +38,3 @@ package:
 plugins:
   - serverless-webpack
   - serverless-offline
-  - serverless-plugin-layer-manager
