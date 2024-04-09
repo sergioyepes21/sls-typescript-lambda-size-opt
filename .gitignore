@@ -3,3 +3,4 @@ dist
 layers
 .webpack
 .serverless
+.DS_Store
