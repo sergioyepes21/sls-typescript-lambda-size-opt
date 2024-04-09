@@ -1,0 +1,47 @@
+
+service: "sls-typescript-lambda-size-opt"
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  layers:
+    - { Ref: NodeModulesLambdaLayer }
+  stage: ${opt:stage, "dev"}
+  logRetentionInDays: 1
+
+layers:
+  NodeModules:
+    path: "./layers/node-modules-lib"
+    name: "node-modules-lib-${sls:stage}"
+    retain: true
+    compatibleRuntimes:
+      - "nodejs20.x"
+
+functions:
+  hello:
+    handler: "./src/index.handler"
+    timeout: 5
+
+custom:
+  webpack:
+    webpackConfig: "./webpack.config.js"
+    includeModules: false
+    packager: "npm"
+  plugin:
+    layerManager:
+      NodeLayers:
+        unsafePermissions: false
+  layerConfig:
+    installLayers: false
+
+package:
+  patterns:
+    - "src/**"
+    - "layers/**"
+    - "!node_modules/**"
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-plugin-layer-manager
