@@ -22,7 +22,7 @@ This repository serves as a simple example demonstrating how to reduce the size 
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/your-username/your-repo.git
+    git clone https://github.com/sergioyepes21/sls-typescript-lambda-size-opt.git
     ```
 
 2. **Install Dependencies**:
